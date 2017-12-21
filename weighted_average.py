@@ -55,7 +55,7 @@ def get_blue(mask, weighted_mask):
             
     return blue / 10
 
-file = 'dog2.png'
+file = argv[1]
 img = Image.open(file)
 
 px = img.load()
@@ -70,5 +70,5 @@ for i in xrange(1, img.size[0]-1):
 
 
 fn, fxt = os.path.splitext(file)
-img.show()
+
 img.save('{}_weighted_average{}'.format(fn, fxt))

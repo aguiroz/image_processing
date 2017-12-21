@@ -55,7 +55,7 @@ def get_blue(mask, gaussian_mask):
     return blue / 16
 
 
-file = 'noise.jpeg' #argv[1]
+file = argv[1]
 img = Image.open(file)
 px = img.load()
 
