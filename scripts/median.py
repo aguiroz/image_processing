@@ -50,22 +50,22 @@ def get_blue(mask):
     return array[4]
     
     
+if __name__ == "__main__":
+  try:
+    file = argv[1]
+  except IndexError:
+    print "\nusage:\n  median.py <IMAGE>"
+    exit(0)
+  img = Image.open(file)
 
-file = argv[1]
+  px = img.load()
 
-img = Image.open(file)
-
-px = img.load()
-
-for i in xrange(1,img.size[0]-1):
-    for j in xrange(1,img.size[1]-1):
-        
+  for i in xrange(1,img.size[0]-1):
+     for j in xrange(1,img.size[1]-1):
         mask = [px[i-1,j-1], px[i,j-1], px[i+1,j-1],
                 px[i-1,j],   px[i,j],   px[i+1,j],
                 px[i-1,j+1], px[i,j+1], px[i+1,j+1]]
-        
         px[i,j] = get_median(mask)
-    
     fn, fxt = os.path.splitext(file)
-    
-img.save('{}_median{}'.format(fn,fxt))
+
+  img.save('{}_median{}'.format(fn,fxt))

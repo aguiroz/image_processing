@@ -51,20 +51,23 @@ def get_blue(mask):
     return total /9
 
 
-file =  argv[1]
+if __name__ == "__main__":
 
-img = Image.open(file)
-px = img.load()
-mask = []
+  try:
+    file =  argv[1]
+  except IndexError:
+    print "\nusage:\n  average.py <IMAGE>\n"
+    exit(0)
+  img = Image.open(file)
+  px = img.load()
+  mask = []
 
-for i in xrange(1,img.size[0]-1):
-    for j in xrange(1,img.size[1]-1):
+  for i in xrange(1,img.size[0]-1):
+      for j in xrange(1,img.size[1]-1):
          mask = [px[i-1,j-1], px[i,j-1], px[i+1,j-1],
                  px[i-1,j],   px[i,j],   px[i+1,j],
-                 px[i-1,j+1], px[i,j+1], px[i+1,j+1]]    
-                 
+                 px[i-1,j+1], px[i,j+1], px[i+1,j+1]]
          px[i,j] = filter(mask)
-         
-fn, fxt = os.path.splitext(argv[1])
-     
-img.save('{}_average{}'.format(fn,fxt))
+
+  fn, fxt = os.path.splitext(argv[1])
+  img.save('{}_average{}'.format(fn,fxt))
