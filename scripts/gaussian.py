@@ -54,31 +54,22 @@ def get_blue(mask, gaussian_mask):
         
     return blue / 16
 
+if __name__ == "__main__":
+  try:
+    file = argv[1]
+  except IndexError:
+    print "\nusage:\n  gaussian.py <IMAGE>\n"
+    exit(0)
+  img = Image.open(file)
+  px = img.load()
 
-file = argv[1]
-img = Image.open(file)
-px = img.load()
-
-for i in xrange(1, img.size[0]-1):
-    for j in xrange(1, img.size[1]-1):
+  for i in xrange(1, img.size[0]-1):
+     for j in xrange(1, img.size[1]-1):
         array = [[px[i-1,j-1], px[i,j-1], px[i+1,j-1]],
                  [px[i-1,j],   px[i,j],   px[i+1,j]],
                  [px[i-1,j+1], px[i,j+1], px[i+1,j+1]]]
-        
         px[i,j] = get_gaussian(array)
-        
-fn, fxt = os.path.splitext(file)
 
-img.save('{}_gaussian{}'.format(fn, fxt))
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+  fn, fxt = os.path.splitext(file)
+
+  img.save('{}_gaussian{}'.format(fn, fxt))

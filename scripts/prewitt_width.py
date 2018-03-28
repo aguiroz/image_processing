@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Created on Thu Dec 21 00:23:24 2017
+Created on Wed Dec 20 23:48:54 2017
 
 @author: aguiroz
 """
@@ -13,9 +13,9 @@ import os
 
 def get_prewitt(array):
     
-    mask = [[-1, 0, 1],
-            [-1, 0, 1],
-            [-1, 0, 1]]
+    mask = [[-1,-1,-1],
+            [ 0, 0, 0],
+            [ 1, 1, 1]]
     
     red = get_red(array, mask)
     green = get_red(array, mask)
@@ -58,13 +58,19 @@ def get_blue(array, mask):
             
     return blue * (blue >= 0)
 
+if __name__ == "__main__":
 
-file = argv[1]
-img = Image.open(file)
+  try:
+    file = argv[1]
+  except IndexError:
+    print "\nusage:\n  prewitt_width.py <IMAGE>\n"
+    exit(0)
 
-px = img.load()
+  img = Image.open(file)
 
-for i in xrange(1, img.size[0]-1):
+  px = img.load()
+
+  for i in xrange(1, img.size[0]-1):
     for j in xrange(1, img.size[1]-1):
         
         array = [[px[i-1,j-1], px[i,j-1], px[i+1,j-1]],
@@ -74,6 +80,6 @@ for i in xrange(1, img.size[0]-1):
         
         px[i,j] = get_prewitt(array)
 
-fn, fxt = os.path.splitext(file)
+  fn, fxt = os.path.splitext(file)
 
-img.save('{}_prewitt_height{}'.format(fn, fxt))
+  img.save('{}_prewitt_width{}'.format(fn, fxt))
